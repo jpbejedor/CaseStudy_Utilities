@@ -1,6 +1,6 @@
 node {
   stage('SCM Checkout'){
-     git 'https://github.com/jpbejedor/com.engineer.git'
+     git 'https://github.com/jpbejedor/CaseStudy_Codes.git'
   }
     
   stage('BUILD'){
