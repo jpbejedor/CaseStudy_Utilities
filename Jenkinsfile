@@ -7,4 +7,11 @@ node {
   def mvnHome = tool name: 'maven3.6.1', type: 'maven'
     sh "${mvnHome}/bin/mvn clean package"
    }
+  
+  stage('TEST'){
+  def scannerHome = tool 'SonarQubeScanner'
+	  withSonarQubeEnv('SonarQube') {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+  }
 }
