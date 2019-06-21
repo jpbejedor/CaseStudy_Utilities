@@ -14,4 +14,15 @@ node {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
+  
+  stage ('UPLOAD Artifactory'){
+  def server = Artifactory.server('MyArtifactory')	
+  def rtMaven = Artifactory.newMavenBuild()
+  	rtMaven.resolver releaseRepo: 'maven', snapshotRepo: 'maven'
+  	rtMaven.deployer server: server, releaseRepo: 'lib-release-local', snapshotRepo: 'lib-snapshot-local'
+  	rtMaven.tool = 'maven3.6.1'
+  def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
+  	server.publishBuildInfo buildInfo
+  }	
+	
 }
